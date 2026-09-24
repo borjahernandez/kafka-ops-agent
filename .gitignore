@@ -1,0 +1,42 @@
+# Python and tooling
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Credentials and local overrides
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+config/local/
+*.local.yaml
+*.local.yml
+
+# Local runtime state and generated evidence
+.state/
+.data/
+.cache/
+artifacts/
+*.sqlite
+*.sqlite3
+*.db
+*.log
+
+# Editor/OS state
+.DS_Store
+.idea/
+.vscode/
+
+# Deliberately keep dependency lockfiles and curated synthetic fixtures tracked.
