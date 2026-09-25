@@ -4,6 +4,12 @@ Prepared 24 September 2026. The dedicated Codex project is rooted in `Documents/
 
 ## Current state
 
+**A1 update, 24 September 2026:** the offline foundation is implemented and verified in the assigned worktree, with no implementation commit or push. The bootstrap notes and original task below are historical. Read [A1_VERIFICATION.md](A1_VERIFICATION.md) and the README for current commands/results. A1 is complete; A2–A5 remain open. Next, select a lab runtime with the user before installing one or starting A2.
+
+**A2 update, 24 September 2026:** user selected local Docker and requested Confluent Docker Hub images. The pinned `confluentinc/cp-kafka:8.3.2` ARM64 fixture and bounded synthetic producer/slow-consumer observer completed a real local baseline/slow/recovery run; a sanitized trace is covered by offline schema/evidence tests. Docker Desktop 4.92.0, Engine/CLI 29.8.1 and Compose 5.5.1 were verified. See [A2_LAB.md](A2_LAB.md) for commands, exact results and safety scope. A2 is complete for the lab demonstration. Continue to A3 only: implement a shared, bounded, read-only Kafka adapter and compare its CLI evidence with this fixture; do not add MCP or an investigator until their milestones.
+
+**A2 review fixes:** replaced the altered fixture with unchanged original capture lines and opaque IDs, recorded provenance separately, added live slowdown acceptance checks and cleanup-aware exit status, and deferred Kafka SDK imports so offline tests work without the lab extra. All 82 tests pass in an isolated default environment. Run `20260924T144019Z` passed the new acceptance checks and recovered; see the lab guide for measured rates and evidence.
+
 - The local Git repository was initialized on `main` with bootstrap documentation, `README.md`, `AGENTS.md` and `.gitignore`.
 - The approved design is [PROJECT_PLAN.md](PROJECT_PLAN.md); the active delivery scope is [Milestone A](MILESTONE_A.md).
 - No application, diagnostic tools, Kafka lab, MCP server or investigator has been implemented or tested.

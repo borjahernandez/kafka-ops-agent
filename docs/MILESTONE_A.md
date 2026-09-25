@@ -1,6 +1,6 @@
 # Milestone A: local diagnostic toolkit and MCP demonstration
 
-Status: bootstrap only. All implementation and integration checks below remain open until verified.
+Status: A1 offline foundation and A2 local Kafka lab verified; A3–A5 remain open. Milestone A is not complete.
 
 ## Outcome
 
@@ -12,16 +12,16 @@ Use the full target design in [PROJECT_PLAN.md](PROJECT_PLAN.md) as context, not
 
 ## A1. Establish a testable, offline foundation
 
-This is the next implementation increment. It must run without Kafka, Docker, network services or model credentials.
+Verified without Kafka, Docker, network services or model credentials. See [A1 verification](A1_VERIFICATION.md) for exact checks and limitations.
 
-- [ ] Verify local tooling and choose one supported, already-installed Python version through `uv`; record it in the project configuration. Do not modify system Python.
-- [ ] Create the minimal package, project-local environment, dependency lockfile, linting configuration and unit-test setup. Keep dependencies small; do not install model SDKs or an agent framework.
-- [ ] Define typed, versioned evidence and capability contracts, plus request scope and collection limits. Include source, cluster/resource identity, evidence ID, observed/collected timestamps, units, coverage, truncation and explicit collection status.
-- [ ] Represent `ok`, `partial`, `stale`, `unsupported`, `permission_denied`, `unavailable` and `timeout` without treating missing values as zero or healthy.
-- [ ] Add one deterministic synthetic adapter and a shared lag-report service. Label fixture data clearly; do not create a fake integration that appears to query Kafka.
-- [ ] Expose that service through a minimal `kafka-ops` CLI with structured JSON output, using the `kafka_ops_agent` package name from the target plan. Commands in the plan are proposals until implemented and tested.
-- [ ] Test schema validation, serialization, timestamps/units, invalid inputs, missing commits, negative/reset-like offset differences and permission/coverage failures. Do not silently clamp invalid offset relationships into a healthy result.
-- [ ] Run and report the exact lint and test commands, with reproducible fixture output.
+- [x] Verify local tooling and choose one supported, already-installed Python version through `uv`; record it in the project configuration. Do not modify system Python.
+- [x] Create the minimal package, project-local environment, dependency lockfile, linting configuration and unit-test setup. Keep dependencies small; do not install model SDKs or an agent framework.
+- [x] Define typed, versioned evidence and capability contracts, plus request scope and collection limits. Include source, cluster/resource identity, evidence ID, observed/collected timestamps, units, coverage, truncation and explicit collection status.
+- [x] Represent `ok`, `partial`, `stale`, `unsupported`, `permission_denied`, `unavailable` and `timeout` without treating missing values as zero or healthy.
+- [x] Add one deterministic synthetic adapter and a shared lag-report service. Label fixture data clearly; do not create a fake integration that appears to query Kafka.
+- [x] Expose that service through a minimal `kafka-ops` CLI with structured JSON output, using the `kafka_ops_agent` package name from the target plan. Commands in the plan are proposals until implemented and tested.
+- [x] Test schema validation, serialization, timestamps/units, invalid inputs, missing commits, negative/reset-like offset differences and permission/coverage failures. Do not silently clamp invalid offset relationships into a healthy result.
+- [x] Run and report the exact lint and test commands, with reproducible fixture output.
 
 Exit evidence: a fresh project environment can run the offline CLI and tests with no Kafka or LLM configuration. This proves contracts and local behavior, not Kafka or MCP compatibility.
 
@@ -29,13 +29,13 @@ Stop after this bounded increment and report the next lab-runtime decision.
 
 ## A2. Select a lab runtime and build one reversible workload
 
-- [ ] Ask the user to select the container/runtime route before installing a system runtime. Options may include an existing Docker-compatible runtime or an explicitly selected remote development host. Verify the selected route rather than assuming Docker is available.
-- [ ] Add a minimal single-node Kafka fixture with pinned dependencies/images and synthetic producer/consumer applications. Bind host-facing services locally where possible; do not expose an unauthenticated public endpoint.
-- [ ] Make input rate, consumer processing delay and commit behavior explicit. Emit processing-progress measurements so growing committed lag is not the only evidence of slow processing.
-- [ ] Isolate the lab with explicit project/resource identifiers and credentials. Keep any runtime control privileges outside the diagnostic service.
-- [ ] Define the slow-consumer scenario as data: prerequisites, target, injection, observation window, expected evidence, cleanup and recovery checks. Keep expected diagnosis and injector state out of agent-visible evidence.
-- [ ] Demonstrate baseline processing, rising lag under delay, and recovery after removing delay. Capture timestamped, sanitized evidence for offline tests.
-- [ ] Ensure interrupted/failed scenarios attempt cleanup and report failed recovery. Limit stop/delete operations to the exact fixture resources.
+- [x] Ask the user to select the container/runtime route before installing a system runtime. User selected local Docker; the tested host/runtime is recorded in [A2 lab status](A2_LAB.md).
+- [x] Add a minimal single-node Kafka fixture with pinned dependencies/images and synthetic producer/consumer applications. Bind host-facing services locally where possible; do not expose an unauthenticated public endpoint.
+- [x] Make input rate, consumer processing delay and commit behavior explicit. Emit processing-progress measurements so growing committed lag is not the only evidence of slow processing.
+- [x] Isolate the lab with explicit project/resource identifiers and credentials. Keep any runtime control privileges outside the diagnostic service.
+- [x] Define the slow-consumer scenario as data: prerequisites, target, injection, observation window, expected evidence, cleanup and recovery checks. Keep expected diagnosis and injector state out of agent-visible evidence.
+- [x] Demonstrate baseline processing, rising lag under delay, and recovery after removing delay. Capture timestamped, sanitized evidence for offline tests.
+- [x] Ensure interrupted/failed scenarios attempt cleanup and report failed recovery. Limit stop/delete operations to the exact fixture resources.
 
 Exit evidence: a documented run demonstrates the intended effect and verified recovery on the tested host/runtime. Record actual versions and resource needs; do not claim universal setup compatibility.
 

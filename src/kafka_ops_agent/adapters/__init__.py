@@ -1,0 +1,1 @@
+"""Small evidence-source adapters."""

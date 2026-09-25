@@ -1,0 +1,31 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "kafka-ops-agent"
+version = "0.1.0"
+description = "Read-only diagnostic contracts and offline synthetic Kafka lag reports"
+requires-python = ">=3.12,<3.13"
+dependencies = ["pydantic==2.12.5"]
+
+[project.optional-dependencies]
+lab = ["confluent-kafka==2.15.1"]
+
+[project.scripts]
+kafka-ops = "kafka_ops_agent.interfaces.cli:main"
+
+[dependency-groups]
+dev = ["pytest==9.0.2", "ruff==0.14.10"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-markers"
+markers = ["integration: requires external services (none implemented in A1)"]
