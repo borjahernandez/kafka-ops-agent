@@ -1,0 +1,21 @@
+{
+  "source_run": "20260924T142012Z",
+  "source_sha256": "94bfd62abdde5494d28eb30e97e145395009fb88535a00b17f62753492e941d4",
+  "source_lines_1_based": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "fixture_sha256": "aeac47d7e785e50b73937ec6c0a34621f126b6081dae85a2c93a8e7bf8ce3e35",
+  "transformation": "Selected complete original JSONL lines verbatim; no field changes."
+}

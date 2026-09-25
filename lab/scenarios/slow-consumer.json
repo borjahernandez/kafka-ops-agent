@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "slow-consumer-v1",
+  "description": "Three-partition synthetic topic with controllable consumer processing delay.",
+  "prerequisites": {
+    "compose_project": "kafka-ops-a2",
+    "broker_service": "broker",
+    "bootstrap_servers": "127.0.0.1:9092",
+    "kafka_image": "confluentinc/cp-kafka:8.3.2@sha256:5e8f3ab5b4977c9a8fd6137d26af2caad878aca316f24c55f08206217e3cec48",
+    "topic": "demo-orders",
+    "group": "demo-consumer",
+    "partition_count": 3,
+    "replication_factor": 1,
+    "producer_rate_records_per_second": 20,
+    "producer_record_limit": 600
+  },
+  "schedule": [
+    {"name": "baseline", "duration_seconds": 6, "consumer_delay_seconds": 0.005},
+    {"name": "slow_processing", "duration_seconds": 16, "consumer_delay_seconds": 0.25},
+    {"name": "recovery", "maximum_duration_seconds": 45, "consumer_delay_seconds": 0.005}
+  ],
+  "expected_evidence": {
+    "baseline": "Processing progress continues; bounded input rate is observable.",
+    "slow_processing": "Committed offset distance grows while processed-record progress slows.",
+    "recovery": "Committed offsets catch up to end offsets after delay removal.",
+    "agent_visible_data_excludes": ["scenario phase", "injected delay", "expected diagnosis"]
+  },
+  "acceptance": {
+    "maximum_baseline_distance": 10,
+    "minimum_distance_growth": 30,
+    "maximum_slow_rate_ratio": 0.5,
+    "maximum_progress_age_seconds": 3.0
+  },
+  "cleanup": {
+    "on_interruption": "Restore the recovery delay, allow bounded producer completion, verify catch-up, then stop only child processes started by this run.",
+    "recovery_timeout_seconds": 45,
+    "recovery_samples_required": 3,
+    "docker_resources": "Leave the named broker running for inspection; stop only kafka-ops-a2 project with the documented Compose command."
+  }
+}
